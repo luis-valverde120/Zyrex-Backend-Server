@@ -20,7 +20,7 @@ const (
 * Notify Represents a notification in the e-commerce application.
 * It contains fields for the notification ID, owner ID, type, message, read status, and creation date.
  */
-type Notify struct {
+type Notification struct {
 	ID         int              `json:"id" gorm:"primaryKey"`
 	OwnerID    int              `json:"owner_id"`
 	Type       NotificationType `json:"type"`
@@ -31,11 +31,11 @@ type Notify struct {
 
 // * methods for Notify struct
 
-func (notify *Notify) Validate() error {
-	if notify.OwnerID == 0 {
+func (notification *Notification) Validate() error {
+	if notification.OwnerID == 0 {
 		return errors.New("owner ID is required")
 	}
-	if strings.TrimSpace(notify.Message) == "" {
+	if strings.TrimSpace(notification.Message) == "" {
 		return errors.New("message is required")
 	}
 
@@ -43,7 +43,7 @@ func (notify *Notify) Validate() error {
 }
 
 // * IsValidType is a validator of the type field.
-func (notify *Notify) IsValidNotificationType(notification_type string) bool {
+func (notification *Notification) IsValidNotificationType(notification_type string) bool {
 	switch strings.ToLower(notification_type) {
 	case string(NotificationOrder), string(NotificationErrSync), string(NotificationLowStock), string(NotificationInfo):
 		return true
@@ -52,26 +52,26 @@ func (notify *Notify) IsValidNotificationType(notification_type string) bool {
 }
 
 // * MarkAsRead marks the notification as read.
-func (notify *Notify) MarkAsRead() {
-	notify.ReadStatus = true
+func (notification *Notification) MarkAsRead() {
+	notification.ReadStatus = true
 }
 
 // * IsRead checks if the notification is read.
-func (notify *Notify) IsRead() bool {
-	return notify.ReadStatus
+func (notification *Notification) IsRead() bool {
+	return notification.ReadStatus
 }
 
 // * method construnctor
-func NewNotification(ownerID int, t NotificationType, msg string) (*Notify, error) {
-	notify := &Notify{
+func NewNotification(ownerID int, t NotificationType, msg string) (*Notification, error) {
+	notification := &Notification{
 		OwnerID:    ownerID,
 		Type:       t,
 		Message:    msg,
 		ReadStatus: false,
 		CreatedAt:  time.Now(),
 	}
-	if err := notify.Validate(); err != nil {
+	if err := notification.Validate(); err != nil {
 		return nil, err
 	}
-	return notify, nil
+	return notification, nil
 }
