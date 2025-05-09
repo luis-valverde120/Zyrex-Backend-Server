@@ -15,16 +15,7 @@ type CartItem struct {
 
 // * Methods for CartItem struct */
 
-// GetCartID returns the cart ID of the CartItem.
-func (cart_item *CartItem) GetID() int {
-	return cart_item.ID
-}
-
-// GetCartID returns the cart ID of the CartItem.
-func (cart_item *CartItem) GetCartID() int {
-	return cart_item.CartID
-}
-
+// ValidateAddItem checks if the CartItem has all the required fields to add an item to the cart.
 func (cart_item *CartItem) ValidateAddItem() error {
 	if cart_item.CartID == 0 {
 		return errors.New("cart ID is required")
