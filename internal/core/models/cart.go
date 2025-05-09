@@ -37,3 +37,14 @@ func (cart *Cart) AddItem(product Product, quantity int) error {
 
 	return nil
 }
+
+// RemoveItem removes an item from the cart by product ID.
+func (cart *Cart) RemoveItem(productID int) error {
+	for i, item := range cart.CartItems {
+		if item.ProductID == productID {
+			cart.CartItems = append(cart.CartItems[:i], cart.CartItems[i+1:]...)
+			return nil
+		}
+	}
+	return errors.New("item not found in cart")
+}
