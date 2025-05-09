@@ -35,5 +35,6 @@ func (cart_item *CartItem) ValidateAddItem() error {
 	if cart_item.Quantity <= 0 {
 		return errors.New("quantity must be greater than 0")
 	}
+
 	return nil
 }

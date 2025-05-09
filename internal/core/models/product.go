@@ -23,54 +23,54 @@ type Product struct {
 
 // methods
 // ChangePrice updates the price of the product. If the new price is negative, it sets the price to 0 and returns an error.
-func (p *Product) ChangePrice(price float64) error {
+func (product *Product) ChangePrice(price float64) error {
 	if price < 0 {
 		price = 0
 		//return error  the price not negative
 		return errors.New("price cannot be negative")
 	}
-	p.Price = price
+	product.Price = price
 	return nil
 }
 
 // ChangeStock update the stock of the product. If the new stock is negative, it sets the stock to 0 and returns an error.
-func (p *Product) ChangeStock(stock int) error {
+func (product *Product) ChangeStock(stock int) error {
 	if stock < 0 {
 		stock = 0
 		//return error  the stock not negative
 		return errors.New("stock cannot be negative")
 	}
-	p.Stock = stock
+	product.Stock = stock
 	return nil
 }
 
 // DecreaseStock decreases the stock of the product by the specified quantity. If the quantity is negative or greater than the current stock, it returns an error.
-func (p *Product) DecreaseStock(quantity int) error {
+func (product *Product) DecreaseStock(quantity int) error {
 	// Validate if has a stock of procut
 	if quantity < 0 {
 		return errors.New("quantity cannot be negative")
 	}
-	if p.Stock < quantity {
+	if product.Stock < quantity {
 		return errors.New("not enough stock")
 	}
-	p.Stock -= quantity
+	product.Stock -= quantity
 	return nil
 }
 
-func (p *Product) Validate() error {
-	if p.Name == "" {
+func (product *Product) Validate() error {
+	if product.Name == "" {
 		return errors.New("name is required")
 	}
-	if p.Description == "" {
+	if product.Description == "" {
 		return errors.New("description is required")
 	}
-	if p.ImgURL == "" {
+	if product.ImgURL == "" {
 		return errors.New("image URL is required")
 	}
-	if p.Price <= 0 {
+	if product.Price <= 0 {
 		return errors.New("price must be greater than 0")
 	}
-	if p.Stock < 0 {
+	if product.Stock < 0 {
 		return errors.New("stock cannot be negative")
 	}
 
@@ -78,16 +78,26 @@ func (p *Product) Validate() error {
 	* Size, Weight, Color are optional fields, so we don't need to validate them.
 	 */
 
-	if p.StoreID <= 0 {
+	if product.StoreID <= 0 {
 		return errors.New("store ID must be greater than 0")
 	}
-	if p.CategoryID <= 0 {
+	if product.CategoryID <= 0 {
 		return errors.New("category ID must be greater than 0")
 	}
 	return nil
 }
 
 // GetProduct returns the product details.
-func (p *Product) GetProduct() Product {
-	return *p
+func (product *Product) GetProduct() Product {
+	return *product
+}
+
+func (product *Product) ValidateToBuyProduct() error {
+	if product.Stock <= 0 {
+		return errors.New("product is out of stock")
+	}
+	if product.Price <= 0 {
+		return errors.New("price must be greater than 0")
+	}
+	return nil
 }
