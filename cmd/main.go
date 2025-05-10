@@ -1,22 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"github.com/luis-valverde120/Zyrex-Backend-Server/internal/infrastructure/config"
+	"github.com/luis-valverde120/Zyrex-Backend-Server/internal/infrastructure/server"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+	cfg := config.Load()
 
-	router := gin.Default()
-
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello, World!",
-		})
-	})
-
-	router.Run()
+	router := server.NewServer()
+	server.StartServer(router, cfg.Port)
 }
