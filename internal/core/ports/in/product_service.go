@@ -11,4 +11,5 @@ type ProductService interface {
 	DeleteProduct(id int) error
 	ListProductsByStore(StoreID int) ([]*models.Product, error)
 	SyncProductsByStore(StoreID int) ([]*models.Product, error)
+	AddNewImageToProduct(productID int, image *models.Image) (*models.Image, error)
 }

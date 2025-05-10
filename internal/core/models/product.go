@@ -11,7 +11,7 @@ type Product struct {
 	ID          int     `json:"id" gorm:"primaryKey"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
-	ImgURL      string  `json:"img_url"`
+	Images      []Image `json:"images"`
 	Price       float64 `json:"price"`
 	Stock       int     `json:"stock"`
 	Size        string  `json:"size"`
@@ -64,9 +64,6 @@ func (product *Product) Validate() error {
 	if product.Description == "" {
 		return errors.New("description is required")
 	}
-	if product.ImgURL == "" {
-		return errors.New("image URL is required")
-	}
 	if product.Price <= 0 {
 		return errors.New("price must be greater than 0")
 	}
@@ -84,6 +81,14 @@ func (product *Product) Validate() error {
 	if product.CategoryID <= 0 {
 		return errors.New("category ID must be greater than 0")
 	}
+
+	// Validate images
+	for _, image := range product.Images {
+		if err := image.Validate(); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
