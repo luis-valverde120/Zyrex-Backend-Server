@@ -12,4 +12,8 @@ type ProductService interface {
 	ListProductsByStore(StoreID int) ([]*models.Product, error)
 	SyncProductsByStore(StoreID int) ([]*models.Product, error)
 	AddNewImageToProduct(productID int, image *models.Image) (*models.Image, error)
+	GetProductByID(id int) (*models.Product, error)
+	GetAllProducts() ([]*models.Product, error)
+	GetAllProductsByCategory(categoryID int) ([]*models.Product, error)
+	GetAllProductsByOwner(ownerID int) ([]*models.Product, error)
 }

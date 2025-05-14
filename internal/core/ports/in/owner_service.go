@@ -10,4 +10,8 @@ type OwnerService interface {
 	CreateOwner(owner *models.Owner) (*models.Owner, error) // Create a new owner in the database
 	UpdateOwner(owner *models.Owner) (*models.Owner, error) // Update an existing owner in the database
 	DeleteOwner(id int) error                               // Delete an owner by ID
+	GetAllOwners() ([]*models.Owner, error)                 // Get all owners
+	GetOwnerByStore(storeID int) ([]*models.Owner, error)   // Get all owners by store ID
+	GetOwnerByStoreID(storeID int) (*models.Owner, error)   // Get an owner by store ID
+	GetStoreByOwnerID(storeID int) (*models.Store, error)   // Get a store by store ID
 }
